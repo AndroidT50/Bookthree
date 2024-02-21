@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//Слой доступа к данным (DAL)
+﻿//Слой доступа к данным (DAL)
+using System.Data.SqlClient;
+
 namespace Bookthree
 {
     internal class ContactRepository
@@ -40,7 +37,6 @@ namespace Bookthree
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
         public static async Task DisplayAllContactsAsync()
         {
@@ -187,6 +183,7 @@ namespace Bookthree
 
     internal class Contact
     {
+
         public int Id { get; set; }
         public string? Name { get; set; }
         //public string PhoneNumber { get; set; }
