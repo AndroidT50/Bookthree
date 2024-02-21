@@ -3,11 +3,11 @@ using System.Data.SqlClient;
 
 namespace Bookthree
 {
-    internal class ContactRepository
+    internal class DataAccess
     {
         public static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=dbtest;Trusted_Connection=True;";// строка подключения
 
-        public static async Task AddAsync(Contact contact, string emails)
+        public static async Task InsertContactAsync(Contact contact, string emails)
         {
             try
             {

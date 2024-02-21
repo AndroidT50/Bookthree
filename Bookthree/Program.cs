@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Bookthree;
 
 namespace ConsoleApp14
 {
@@ -12,6 +13,40 @@ namespace ConsoleApp14
 
         static async Task Main(string[] args)
         {
+
+            static async Task AddContactAsync(PhonebookManager phonebookManager)
+            {
+              
+                Console.WriteLine("Введите имя контакта:");
+                string  name = Console.ReadLine();
+
+                Console.WriteLine("Введите email'ы контакта (через запятую):");
+                string emailsInput = Console.ReadLine();
+                List<string> emails = new List<string>(emailsInput.Split(','));
+                Contact contact = new Contact
+                {
+                    Name = name,
+                    Email = emails
+
+                };
+
+
+                await phonebookManager.AddContactAsync(contact);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //Contact contact = new Contact();
 
 
