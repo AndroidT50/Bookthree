@@ -3,35 +3,49 @@ using System.Data.SqlClient;
 
 namespace Bookthree
 {
+    public class Contact
+    {
+
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        //public string PhoneNumber { get; set; }
+        public List<string> Email { get; set; } = new List<string>();
+    }
     internal class DataAccess
     {
         public static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=dbtest;Trusted_Connection=True;";// строка подключения
 
-        public static async Task InsertContactAsync(Contact contact, string emails)
+        public async Task InsertContactAsync(Contact contact)
         {
             try
             {
-                string sqlExpression = $"INSERT INTO dbbtest (Name, Email) VALUES ('{contact.Name}', '{emails}')";
+                
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     await connection.OpenAsync();
 
-                    SqlCommand command = new SqlCommand(sqlExpression, connection);
+                    foreach (string email in contact.Email)
+                    {
+                        string sqlExpression = $"INSERT INTO dbbtest (Name, Email) VALUES ('{contact.Name}', '{email}')";
 
-                    // создаем параметр для имени
-                    SqlParameter nameParam = new SqlParameter("@name", contact.Name);
+                        SqlCommand command = new SqlCommand(sqlExpression, connection);
 
-                    command.Parameters.Add(nameParam);
+                        // создаем параметр для имени
+                        SqlParameter nameParam = new SqlParameter("@name", contact.Name);
 
-                    SqlParameter emailParam = new SqlParameter("@email", emails);
+                        command.Parameters.Add(nameParam);
 
-                    command.Parameters.Add(emailParam);
+                        SqlParameter emailParam = new SqlParameter("@email", email);
 
-                    int number = await command.ExecuteNonQueryAsync();
-                    Console.WriteLine($"Добавлено объектов: {number}");
+                        command.Parameters.Add(emailParam);
+
+                        int number = await command.ExecuteNonQueryAsync();
+                        Console.WriteLine($"Добавлено объектов: {number}");
+                    }
+                    
                 }
-                Console.Read();
+                //Console.Read();
             }
             catch (Exception ex)
             {
@@ -180,13 +194,5 @@ namespace Bookthree
             }
         }
     }
-
-    internal class Contact
-    {
-
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        //public string PhoneNumber { get; set; }
-        public List<string> Email { get; set; } = new List<string>();
-    }
+  
 }

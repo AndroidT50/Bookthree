@@ -13,12 +13,15 @@ namespace ConsoleApp14
 
         static async Task Main(string[] args)
         {
+            PhonebookManager phonebookManager = new PhonebookManager();
+
+            await AddContactAsync(phonebookManager);
 
             static async Task AddContactAsync(PhonebookManager phonebookManager)
             {
-              
+
                 Console.WriteLine("Введите имя контакта:");
-                string  name = Console.ReadLine();
+                string name = Console.ReadLine();
 
                 Console.WriteLine("Введите email'ы контакта (через запятую):");
                 string emailsInput = Console.ReadLine();
@@ -29,12 +32,10 @@ namespace ConsoleApp14
                     Email = emails
 
                 };
-
-
                 await phonebookManager.AddContactAsync(contact);
             }
 
-
+            
 
 
 
