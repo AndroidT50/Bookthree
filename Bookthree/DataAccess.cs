@@ -5,7 +5,6 @@ namespace Bookthree
 {
     public class Contact
     {
-
         public int Id { get; set; }
         public string? Name { get; set; }
         //public string PhoneNumber { get; set; }
@@ -19,40 +18,34 @@ namespace Bookthree
         {
             try
             {
-                
-
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    await connection.OpenAsync();
+                        string emails = string.Join(" ", contact.Email);
+                        await connection.OpenAsync();
 
-                    foreach (string email in contact.Email)
-                    {
-                        string sqlExpression = $"INSERT INTO dbbtest (Name, Email) VALUES ('{contact.Name}', '{email}')";
+                        string sqlExpression = $"INSERT INTO dbbtest (Name, Email) VALUES ('{contact.Name}','{emails}')";
 
                         SqlCommand command = new SqlCommand(sqlExpression, connection);
 
                         // создаем параметр для имени
-                        SqlParameter nameParam = new SqlParameter("@name", contact.Name);
+                        SqlParameter nameParam = new SqlParameter("@Name", contact.Name);
 
                         command.Parameters.Add(nameParam);
 
-                        SqlParameter emailParam = new SqlParameter("@email", email);
+                        SqlParameter emailParam = new SqlParameter("@Email", emails);
 
                         command.Parameters.Add(emailParam);
 
                         int number = await command.ExecuteNonQueryAsync();
                         Console.WriteLine($"Добавлено объектов: {number}");
-                    }
-                    
                 }
-                //Console.Read();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
-        public static async Task DisplayAllContactsAsync()
+        public async Task DisplayAllContactsAsync()
         {
             try
             {

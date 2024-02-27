@@ -22,6 +22,10 @@ namespace Bookthree
             Console.WriteLine("Контакт успешно добавлен в базу данных.");
         }
 
+        public async Task PrintALL()
+        {
+
+        }
 
     }
 
