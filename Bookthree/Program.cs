@@ -30,11 +30,11 @@ namespace ConsoleApp14
                 {
                     Name = name,
                     Email = emails
-
                 };
                 await phonebookManager.AddContactAsync(contact);
             }
 
+            await phonebookManager.PrintALL();
             
 
 

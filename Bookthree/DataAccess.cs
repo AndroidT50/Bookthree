@@ -1,5 +1,7 @@
 ﻿//Слой доступа к данным (DAL)
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace Bookthree
 {
@@ -45,8 +47,9 @@ namespace Bookthree
                 Console.WriteLine(ex.Message);
             }
         }
-        public async Task DisplayAllContactsAsync()
+        public async Task<List<(string Name,string Email)>> DisplayAllContactsAsync()
         {
+            List<(string Name, string Email)>contacts = new List<(string, string)>();
             try
             {
                 string sqlExpression = "SELECT * FROM dbbtest";
@@ -55,32 +58,23 @@ namespace Bookthree
                     await connection.OpenAsync();
                     SqlCommand command = new SqlCommand(sqlExpression, connection);
                     SqlDataReader reader = await command.ExecuteReaderAsync();
-                    if (reader.HasRows) // если есть данные
+                  
+                    while (await reader.ReadAsync()) 
                     {
-                        // выводим названия столбцов
-                        string columnName1 = reader.GetName(0);
-                        string columnName2 = reader.GetName(1);
-                        string columnName3 = reader.GetName(2);
-
-                        Console.WriteLine($"{columnName1}\t{columnName2}\t{columnName3}");
-                    }
-                    while (await reader.ReadAsync()) // построчно считываем данные
-                    {
-                        object id = reader.GetValue(0);
-                        object name = reader.GetValue(1);
-                        object mail = reader.GetValue(2);
-
-                        Console.WriteLine($"{id} \t{name} \t{mail}");
+                      contacts.Add((reader["Name"].ToString(), reader["Email"].ToString()));
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+              Console.WriteLine(ex.Message);
             }
+
+            return contacts;
         }
-        public static async Task SearchPhoneNumberAsync(string phoneNumber)
+        public async Task<List<(string Name,string Email)>> SearchPhoneNumberAsync(string phoneNumber)
         {
+            List<(string Name, string Email)> contacts = new List<(string, string)>();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -107,6 +101,7 @@ namespace Bookthree
             {
                 Console.WriteLine($"Произошла ошибка {ex.Message}");
             }
+            return contacts;
         }
         public static async Task SearchNameAsync(string name)
         {
