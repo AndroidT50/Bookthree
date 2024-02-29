@@ -15,13 +15,11 @@ namespace Bookthree
         {
             dataAccess = new DataAccess();
         }
-
         public async Task AddContactAsync(Contact contact)
         {
             await dataAccess.InsertContactAsync(contact);
             Console.WriteLine("Контакт успешно добавлен в базу данных.");
         }
-
         public async Task PrintALL()
         {
             var contacts = await dataAccess.DisplayAllContactsAsync();
@@ -30,7 +28,6 @@ namespace Bookthree
                 Console.WriteLine($"Имя: {item.Name}, Email: {item.Email}"); 
             }
         }
-
         public async Task SearchNameAsync(string name)
         {
             var contacts = await dataAccess.SearchNameAsync(name);
@@ -43,6 +40,15 @@ namespace Bookthree
             {
                 Console.WriteLine($"Имя:{contact.Name}, Email:{contact.Email}");
             }
+        }
+        public async Task AddEmail(string name,string email)
+        {
+            var contacts = await dataAccess.AddEmail(name,email);
+            if (contacts.Count == 0)
+            {
+                Console.WriteLine("Контакт не найден");
+            }
+
 
         }
 
