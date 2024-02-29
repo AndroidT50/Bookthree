@@ -95,7 +95,6 @@ namespace Bookthree
                         Console.WriteLine("Контакт не найден в базе данных");
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -103,8 +102,9 @@ namespace Bookthree
             }
             return contacts;
         }
-        public static async Task SearchNameAsync(string name)
+        public async Task<List <(string Name,string Email)>> SearchNameAsync(string name)
         {
+            List<(string Name, string Email)> contacts = new List<(string, string)>();
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -114,15 +114,11 @@ namespace Bookthree
                     SqlCommand command = new SqlCommand(sqlExpression, connection);
                     command.Parameters.AddWithValue("@Name", "%" + name + "%");
                     SqlDataReader reader = await command.ExecuteReaderAsync();
-                    bool found = false; //флаг чтобы отследить найден ли контакт или нет
+                    
                     while (await reader.ReadAsync())
                     {
-                        found = true;
-                        Console.WriteLine($"Id: {reader.GetValue(0)}, Name: {reader.GetValue(1)}, Email: {reader.GetValue(2)}");
-                    }
-                    if (!found)
-                    {
-                        Console.WriteLine("Имя пользователя не найдено в базе данных");
+
+                        contacts.Add((reader["Name"].ToString(), reader["Email"].ToString()));
                     }
                 }
             }
@@ -130,9 +126,11 @@ namespace Bookthree
             {
                 Console.WriteLine($"Произошла ошибка :{ex.Message}");
             }
+            return contacts;
         }
-        public static async Task AddEmail(string name, string updatedEmail)
+        public async Task<List<(string Name, string Email)>> AddEmail(string name, string updatedEmail)
         {
+            List<(string Name, string Email)> contacts = new List<(string, string)>();
             try
             {
                 // Создаем подключение к базе данных
@@ -147,7 +145,6 @@ namespace Bookthree
                     {
                         //  параметр для имени человека
                         command.Parameters.AddWithValue("@Name", name);
-
                         // запрос и считываем результаты
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
@@ -180,6 +177,7 @@ namespace Bookthree
             {
                 Console.WriteLine($"Произошла ошибка:{ex.Message}");
             }
+            return contacts;
         }
     }
   

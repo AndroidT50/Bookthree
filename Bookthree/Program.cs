@@ -15,27 +15,34 @@ namespace ConsoleApp14
         {
             PhonebookManager phonebookManager = new PhonebookManager();
 
-            await AddContactAsync(phonebookManager);
+            //await AddContactAsync(phonebookManager);
 
-            static async Task AddContactAsync(PhonebookManager phonebookManager)
+            //static async Task AddContactAsync(PhonebookManager phonebookManager)
+            //{
+
+            //    Console.WriteLine("Введите имя контакта:");
+            //    string name = Console.ReadLine();
+
+            //    Console.WriteLine("Введите email'ы контакта (через запятую):");
+            //    string emailsInput = Console.ReadLine();
+            //    List<string> emails = new List<string>(emailsInput.Split(','));
+            //    Contact contact = new Contact
+            //    {
+            //        Name = name,
+            //        Email = emails
+            //    };
+            //    await phonebookManager.AddContactAsync(contact);
+            //}
+            //await phonebookManager.PrintALL();
+            await SearchByNameAsync(phonebookManager);
+            static async Task SearchByNameAsync (PhonebookManager phonebookManager)
             {
-
-                Console.WriteLine("Введите имя контакта:");
+                Console.WriteLine("Введите Имя для поиска");
                 string name = Console.ReadLine();
+                await phonebookManager.SearchNameAsync(name);
 
-                Console.WriteLine("Введите email'ы контакта (через запятую):");
-                string emailsInput = Console.ReadLine();
-                List<string> emails = new List<string>(emailsInput.Split(','));
-                Contact contact = new Contact
-                {
-                    Name = name,
-                    Email = emails
-                };
-                await phonebookManager.AddContactAsync(contact);
             }
 
-            await phonebookManager.PrintALL();
-            
 
 
 

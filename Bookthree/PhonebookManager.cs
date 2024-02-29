@@ -31,17 +31,17 @@ namespace Bookthree
             }
         }
 
-        public async Task SearchPhoneAsync(string name)
+        public async Task SearchNameAsync(string name)
         {
-            var contacts = await dataAccess.SearchPhoneNumberAsync(name);
-            if(contacts.Count == 0)
+            var contacts = await dataAccess.SearchNameAsync(name);
+            if (contacts.Count == 0)
             {
                 Console.WriteLine("Контакт не найден");
-                return;
+                
             }
             foreach (var contact in contacts)
             {
-                Console.WriteLine($"{contact.Name},{contact.Email}");
+                Console.WriteLine($"Имя:{contact.Name}, Email:{contact.Email}");
             }
 
         }
