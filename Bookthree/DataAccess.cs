@@ -50,9 +50,6 @@ namespace Bookthree
                 Console.WriteLine(ex.Message);
             }
         }
-
-
-
         public async Task<List<(string Name,string PhoneNumber, string Email)>> DisplayAllContactsAsync()
         {
             List<(string Name, string PhoneNumber, string Email)>contacts = new List<(string, string, string)>();
@@ -75,17 +72,8 @@ namespace Bookthree
             {
               Console.WriteLine(ex.Message);
             }
-
             return contacts;
         }
-
-
-
-
-
-
-
-
         public async Task<List<(string Name,string Email,string PhoneNumber)>> SearchPhoneNumberAsync(string phoneNumber)
         {
 
@@ -136,7 +124,6 @@ namespace Bookthree
             }
             return contacts;
         }
-
         public async  Task<List<(string Name, string Email)>> AddInsertAsync(string name, string updatedEmail)
         {
             List<(string Name, string Email)> contacts = new List<(string, string)>();

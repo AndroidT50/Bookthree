@@ -8,7 +8,6 @@ namespace Bookthree
 {
     internal class PhonebookManager
     {
-
         private DataAccess dataAccess;
 
         public PhonebookManager()
@@ -49,7 +48,6 @@ namespace Bookthree
                 Console.WriteLine($"Имя:{contact.Name},PhoneNumber:{contact.PhoneNumber}, Email:{contact.Email}");
             }
         }
-
         public async Task SearchPhoneAsync(string phoneNamber)
         {
             var contacts = await dataAccess.SearchPhoneNumberAsync(phoneNamber);
@@ -63,7 +61,6 @@ namespace Bookthree
                 Console.WriteLine($"Имя:{contact.Name},PhoneNumber:{contact.PhoneNumber}, Email:{contact.Email}");
             }
         }
-
         public async Task AddInsertAsync(string name, string updatedEmail)
         {
             var contacts = await dataAccess.AddInsertAsync(name,updatedEmail);
@@ -78,5 +75,4 @@ namespace Bookthree
                 Console.WriteLine($"Имя:{contact.Name}, Email:{contact.Email}");
             }
         }
-
 }   } 
